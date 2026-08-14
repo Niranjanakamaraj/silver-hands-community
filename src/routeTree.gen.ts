@@ -10,33 +10,157 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BuyerRouteImport } from './routes/buyer'
+import { Route as SellerRouteImport } from './routes/seller'
+import { Route as BuyerIndexRouteImport } from './routes/buyer.index'
+import { Route as BuyerFavoritesRouteImport } from './routes/buyer.favorites'
+import { Route as BuyerMessagesRouteImport } from './routes/buyer.messages'
+import { Route as BuyerProductsRouteImport } from './routes/buyer.products'
+import { Route as BuyerProfileRouteImport } from './routes/buyer.profile'
+import { Route as BuyerServicesRouteImport } from './routes/buyer.services'
+import { Route as BuyerProductIdRouteImport } from './routes/buyer.product.$id'
+import { Route as BuyerServiceIdRouteImport } from './routes/buyer.service.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuyerRoute = BuyerRouteImport.update({
+  id: '/buyer',
+  path: '/buyer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SellerRoute = SellerRouteImport.update({
+  id: '/seller',
+  path: '/seller',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyerIndexRoute = BuyerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BuyerRoute,
+} as any)
+const BuyerFavoritesRoute = BuyerFavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
+  getParentRoute: () => BuyerRoute,
+} as any)
+const BuyerMessagesRoute = BuyerMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => BuyerRoute,
+} as any)
+const BuyerProductsRoute = BuyerProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => BuyerRoute,
+} as any)
+const BuyerProfileRoute = BuyerProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => BuyerRoute,
+} as any)
+const BuyerServicesRoute = BuyerServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => BuyerRoute,
+} as any)
+const BuyerProductIdRoute = BuyerProductIdRouteImport.update({
+  id: '/product/$id',
+  path: '/product/$id',
+  getParentRoute: () => BuyerRoute,
+} as any)
+const BuyerServiceIdRoute = BuyerServiceIdRouteImport.update({
+  id: '/service/$id',
+  path: '/service/$id',
+  getParentRoute: () => BuyerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/buyer': typeof BuyerRouteWithChildren
+  '/seller': typeof SellerRoute
+  '/buyer/favorites': typeof BuyerFavoritesRoute
+  '/buyer/messages': typeof BuyerMessagesRoute
+  '/buyer/products': typeof BuyerProductsRoute
+  '/buyer/profile': typeof BuyerProfileRoute
+  '/buyer/services': typeof BuyerServicesRoute
+  '/buyer/': typeof BuyerIndexRoute
+  '/buyer/product/$id': typeof BuyerProductIdRoute
+  '/buyer/service/$id': typeof BuyerServiceIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/seller': typeof SellerRoute
+  '/buyer/favorites': typeof BuyerFavoritesRoute
+  '/buyer/messages': typeof BuyerMessagesRoute
+  '/buyer/products': typeof BuyerProductsRoute
+  '/buyer/profile': typeof BuyerProfileRoute
+  '/buyer/services': typeof BuyerServicesRoute
+  '/buyer': typeof BuyerIndexRoute
+  '/buyer/product/$id': typeof BuyerProductIdRoute
+  '/buyer/service/$id': typeof BuyerServiceIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/buyer': typeof BuyerRouteWithChildren
+  '/seller': typeof SellerRoute
+  '/buyer/favorites': typeof BuyerFavoritesRoute
+  '/buyer/messages': typeof BuyerMessagesRoute
+  '/buyer/products': typeof BuyerProductsRoute
+  '/buyer/profile': typeof BuyerProfileRoute
+  '/buyer/services': typeof BuyerServicesRoute
+  '/buyer/': typeof BuyerIndexRoute
+  '/buyer/product/$id': typeof BuyerProductIdRoute
+  '/buyer/service/$id': typeof BuyerServiceIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/buyer'
+    | '/seller'
+    | '/buyer/favorites'
+    | '/buyer/messages'
+    | '/buyer/products'
+    | '/buyer/profile'
+    | '/buyer/services'
+    | '/buyer/'
+    | '/buyer/product/$id'
+    | '/buyer/service/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/seller'
+    | '/buyer/favorites'
+    | '/buyer/messages'
+    | '/buyer/products'
+    | '/buyer/profile'
+    | '/buyer/services'
+    | '/buyer'
+    | '/buyer/product/$id'
+    | '/buyer/service/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/buyer'
+    | '/seller'
+    | '/buyer/favorites'
+    | '/buyer/messages'
+    | '/buyer/products'
+    | '/buyer/profile'
+    | '/buyer/services'
+    | '/buyer/'
+    | '/buyer/product/$id'
+    | '/buyer/service/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BuyerRoute: typeof BuyerRouteWithChildren
+  SellerRoute: typeof SellerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +172,107 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/buyer': {
+      id: '/buyer'
+      path: '/buyer'
+      fullPath: '/buyer'
+      preLoaderRoute: typeof BuyerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/seller': {
+      id: '/seller'
+      path: '/seller'
+      fullPath: '/seller'
+      preLoaderRoute: typeof SellerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buyer/': {
+      id: '/buyer/'
+      path: '/'
+      fullPath: '/buyer/'
+      preLoaderRoute: typeof BuyerIndexRouteImport
+      parentRoute: typeof BuyerRoute
+    }
+    '/buyer/favorites': {
+      id: '/buyer/favorites'
+      path: '/favorites'
+      fullPath: '/buyer/favorites'
+      preLoaderRoute: typeof BuyerFavoritesRouteImport
+      parentRoute: typeof BuyerRoute
+    }
+    '/buyer/messages': {
+      id: '/buyer/messages'
+      path: '/messages'
+      fullPath: '/buyer/messages'
+      preLoaderRoute: typeof BuyerMessagesRouteImport
+      parentRoute: typeof BuyerRoute
+    }
+    '/buyer/products': {
+      id: '/buyer/products'
+      path: '/products'
+      fullPath: '/buyer/products'
+      preLoaderRoute: typeof BuyerProductsRouteImport
+      parentRoute: typeof BuyerRoute
+    }
+    '/buyer/profile': {
+      id: '/buyer/profile'
+      path: '/profile'
+      fullPath: '/buyer/profile'
+      preLoaderRoute: typeof BuyerProfileRouteImport
+      parentRoute: typeof BuyerRoute
+    }
+    '/buyer/services': {
+      id: '/buyer/services'
+      path: '/services'
+      fullPath: '/buyer/services'
+      preLoaderRoute: typeof BuyerServicesRouteImport
+      parentRoute: typeof BuyerRoute
+    }
+    '/buyer/product/$id': {
+      id: '/buyer/product/$id'
+      path: '/product/$id'
+      fullPath: '/buyer/product/$id'
+      preLoaderRoute: typeof BuyerProductIdRouteImport
+      parentRoute: typeof BuyerRoute
+    }
+    '/buyer/service/$id': {
+      id: '/buyer/service/$id'
+      path: '/service/$id'
+      fullPath: '/buyer/service/$id'
+      preLoaderRoute: typeof BuyerServiceIdRouteImport
+      parentRoute: typeof BuyerRoute
+    }
   }
 }
 
+interface BuyerRouteChildren {
+  BuyerFavoritesRoute: typeof BuyerFavoritesRoute
+  BuyerMessagesRoute: typeof BuyerMessagesRoute
+  BuyerProductsRoute: typeof BuyerProductsRoute
+  BuyerProfileRoute: typeof BuyerProfileRoute
+  BuyerServicesRoute: typeof BuyerServicesRoute
+  BuyerIndexRoute: typeof BuyerIndexRoute
+  BuyerProductIdRoute: typeof BuyerProductIdRoute
+  BuyerServiceIdRoute: typeof BuyerServiceIdRoute
+}
+
+const BuyerRouteChildren: BuyerRouteChildren = {
+  BuyerFavoritesRoute: BuyerFavoritesRoute,
+  BuyerMessagesRoute: BuyerMessagesRoute,
+  BuyerProductsRoute: BuyerProductsRoute,
+  BuyerProfileRoute: BuyerProfileRoute,
+  BuyerServicesRoute: BuyerServicesRoute,
+  BuyerIndexRoute: BuyerIndexRoute,
+  BuyerProductIdRoute: BuyerProductIdRoute,
+  BuyerServiceIdRoute: BuyerServiceIdRoute,
+}
+
+const BuyerRouteWithChildren = BuyerRoute._addFileChildren(BuyerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BuyerRoute: BuyerRouteWithChildren,
+  SellerRoute: SellerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
