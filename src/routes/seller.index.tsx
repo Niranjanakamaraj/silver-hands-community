@@ -29,64 +29,45 @@ const widgets = [
 ];
 
 function SellerDashboard() {
-  const hero = widgets[0]!;
-  const rest = widgets.slice(1);
-
   return (
-    <div className="space-y-16">
-      <header className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4 sm:flex sm:flex-wrap sm:justify-between">
-        <div className="min-w-0">
+    <div className="space-y-14">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             Good morning, Anjali
           </p>
           <h1 className="mt-2 text-4xl lg:text-5xl">Your shop today</h1>
         </div>
-        <Button asChild size="lg" variant="gold" className="press shrink-0">
+        <Button asChild size="lg" variant="gold">
           <Link to="/seller/products">Add a new listing</Link>
         </Button>
-      </header>
+      </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="surface-raised gradient-olive flex flex-col justify-center gap-6 p-8 lg:col-span-1 lg:self-start lg:p-10">
-          <span className="grid size-14 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-soft">
-            <hero.icon className="size-7" aria-hidden />
-          </span>
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {widgets.map(({ icon: Icon, label, value, sub }) => (
+          <div key={label} className="surface hover-lift p-7">
+            <span className="grid size-12 place-items-center rounded-2xl bg-primary-soft text-primary">
+              <Icon className="size-6" aria-hidden />
+            </span>
+            <p className="mt-5 text-sm text-muted-foreground">{label}</p>
+            <p className="text-3xl font-semibold">{value}</p>
+            <p className="mt-1 text-sm text-accent">{sub}</p>
+          </div>
+        ))}
+
+        <div className="surface flex flex-col justify-between gap-4 bg-primary-soft p-7">
           <div>
-            <p className="text-sm font-medium text-muted-foreground">{hero.label}</p>
-            <p className="mt-1 text-5xl font-semibold tracking-tight lg:text-6xl">{hero.value}</p>
-            <p className="mt-3 inline-flex rounded-full bg-card px-3 py-1 text-sm font-semibold text-primary shadow-soft">
-              {hero.sub}
+            <span className="grid size-12 place-items-center rounded-2xl bg-primary text-primary-foreground">
+              <Sparkles className="size-6" aria-hidden />
+            </span>
+            <p className="mt-5 font-semibold">AI tip of the day</p>
+            <p className="text-muted-foreground">
+              Adding two more photos to your mango preserve listing could raise conversions by
+              about 22%.
             </p>
           </div>
         </div>
-
-        <div className="grid gap-6 sm:grid-cols-2 lg:col-span-2">
-          {rest.map(({ icon: Icon, label, value, sub }) => (
-            <div key={label} className="surface hover-lift p-7">
-              <span className="grid size-12 place-items-center rounded-2xl bg-primary-soft text-primary">
-                <Icon className="size-6" aria-hidden />
-              </span>
-              <p className="mt-5 text-sm font-medium text-muted-foreground">{label}</p>
-              <p className="text-3xl font-semibold tracking-tight">{value}</p>
-              <p className="mt-1 text-sm text-accent">{sub}</p>
-            </div>
-          ))}
-
-          <div className="surface flex flex-col justify-between gap-4 bg-primary-soft p-7">
-            <div>
-              <span className="grid size-12 place-items-center rounded-2xl bg-primary text-primary-foreground">
-                <Sparkles className="size-6" aria-hidden />
-              </span>
-              <p className="mt-5 font-semibold">AI tip of the day</p>
-              <p className="text-muted-foreground">
-                Adding two more photos to your mango preserve listing could raise conversions by
-                about 22%.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
-
 
       <section>
         <SectionHeading
