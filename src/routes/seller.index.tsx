@@ -47,7 +47,7 @@ function SellerDashboard() {
       </header>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <div className="surface-raised gradient-olive flex flex-col justify-between gap-6 p-8 lg:col-span-1 lg:p-10">
+        <div className="surface-raised gradient-olive flex flex-col justify-center gap-6 p-8 lg:col-span-1 lg:self-start lg:p-10">
           <span className="grid size-14 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-soft">
             <hero.icon className="size-7" aria-hidden />
           </span>
