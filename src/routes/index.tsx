@@ -43,7 +43,7 @@ const cards = [
 
 function Landing() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <header className="mx-auto flex h-24 max-w-7xl items-center px-6 lg:px-10">
         <span className="font-display text-2xl font-semibold tracking-tight">SilverHands</span>
       </header>
