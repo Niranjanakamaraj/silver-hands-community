@@ -48,7 +48,7 @@ function Messages() {
 
         <div className="surface flex min-h-[26rem] flex-col">
           <header className="border-b border-border px-6 py-4">
-            <p className="font-semibold">{services[0].seller}</p>
+            <p className="font-semibold">{services[0]?.seller}</p>
             <p className="text-sm text-muted-foreground">Usually replies within an hour</p>
           </header>
           <div className="flex flex-1 flex-col gap-3 p-6">
