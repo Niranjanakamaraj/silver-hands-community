@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Sparkles, X, SendHorizonal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -27,20 +27,31 @@ const canned: Record<string, string> = {
 export function AIAssistant() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+  const scroller = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Msg[]>([
     {
       from: "ai",
-      text: "Hello, I'm Hansa — your SilverHands assistant. I can write descriptions, suggest pricing, or polish your profile. What shall we work on?",
+      text: "Hello, I'm Hansa — your SilverHands concierge. I can write descriptions, suggest pricing, or polish your profile. What shall we work on?",
     },
   ]);
+
+  useEffect(() => {
+    scroller.current?.scrollTo({ top: scroller.current.scrollHeight, behavior: "smooth" });
+  }, [messages, typing]);
 
   function send(text: string) {
     if (!text.trim()) return;
     const reply =
       canned[text] ??
       "Good question. Here's my suggestion: keep the listing title under nine words, lead with the material or method, and mention delivery time — listings that do this get about 30% more enquiries.";
-    setMessages((m) => [...m, { from: "me", text }, { from: "ai", text: reply }]);
+    setMessages((m) => [...m, { from: "me", text }]);
     setInput("");
+    setTyping(true);
+    setTimeout(() => {
+      setTyping(false);
+      setMessages((m) => [...m, { from: "ai", text: reply }]);
+    }, 650);
   }
 
   return (
@@ -50,43 +61,60 @@ export function AIAssistant() {
         size="lg"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-label="Open the SilverHands AI assistant"
-        className="fixed bottom-6 right-5 z-50 shadow-lift md:bottom-8 md:right-8"
+        aria-label={open ? "Close the Hansa AI concierge" : "Open the Hansa AI concierge"}
+        className="press fixed bottom-24 right-5 z-50 shadow-lift lg:bottom-8 lg:right-8"
       >
         {open ? <X /> : <Sparkles />}
-        <span className="hidden sm:inline">{open ? "Close" : "Ask Hansa AI"}</span>
+        <span className="hidden sm:inline">{open ? "Close" : "Ask Hansa"}</span>
       </Button>
 
       <div
+        role="dialog"
+        aria-label="Hansa AI concierge"
+        aria-hidden={!open}
         className={cn(
-          "surface fixed bottom-24 right-4 z-50 flex w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden transition-all duration-300 md:right-8",
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none translate-y-3 opacity-0",
+          "surface-raised fixed bottom-40 right-4 z-50 flex w-[min(24.5rem,calc(100vw-2rem))] flex-col overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:bottom-24 lg:right-8",
+          open
+            ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
+            : "pointer-events-none translate-y-4 scale-95 opacity-0",
         )}
       >
-        <header className="flex items-center gap-3 border-b border-border bg-primary-soft px-5 py-4">
-          <span className="grid size-10 place-items-center rounded-full bg-primary text-primary-foreground">
+        <header className="gradient-olive flex items-center gap-3 border-b border-border px-5 py-4">
+          <span className="grid size-11 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground shadow-soft">
             <Sparkles className="size-5" aria-hidden />
           </span>
-          <div>
-            <p className="font-semibold">Hansa AI</p>
-            <p className="text-xs text-muted-foreground">Your listing & pricing companion</p>
+          <div className="min-w-0">
+            <p className="font-semibold">Hansa</p>
+            <p className="text-xs text-muted-foreground">Your listing & pricing concierge</p>
           </div>
         </header>
 
-        <div className="flex max-h-[45vh] flex-col gap-3 overflow-y-auto px-5 py-4">
+        <div ref={scroller} className="flex max-h-[45vh] flex-col gap-3 overflow-y-auto px-5 py-4">
           {messages.map((m, i) => (
             <p
               key={i}
               className={cn(
-                "max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed",
+                "max-w-[85%] rounded-2xl px-4 py-3 text-[0.95rem] leading-relaxed",
                 m.from === "ai"
-                  ? "bg-muted text-foreground"
-                  : "self-end bg-primary text-primary-foreground",
+                  ? "rounded-bl-md bg-muted text-foreground"
+                  : "self-end rounded-br-md bg-primary text-primary-foreground",
               )}
             >
               {m.text}
             </p>
           ))}
+          {typing && (
+            <span className="flex w-16 items-center justify-center gap-1 rounded-2xl bg-muted py-3">
+              {[0, 150, 300].map((d) => (
+                <i
+                  key={d}
+                  style={{ animationDelay: `${d}ms` }}
+                  className="size-1.5 animate-bounce rounded-full bg-muted-foreground"
+                />
+              ))}
+              <span className="sr-only">Hansa is typing</span>
+            </span>
+          )}
         </div>
 
         <div className="flex flex-wrap gap-2 px-5 pb-3">
@@ -95,7 +123,7 @@ export function AIAssistant() {
               key={s}
               type="button"
               onClick={() => send(s)}
-              className="rounded-full border border-border px-3 py-1.5 text-xs font-medium transition-colors hover:border-accent hover:text-accent"
+              className="press rounded-full border border-border bg-card px-3 py-2 text-xs font-medium transition-colors hover:border-accent hover:text-accent"
             >
               {s}
             </button>
@@ -117,7 +145,7 @@ export function AIAssistant() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask anything…"
-            className="h-11 flex-1 rounded-full bg-muted px-4 text-sm outline-none placeholder:text-muted-foreground"
+            className="h-12 flex-1 rounded-full bg-muted px-4 text-[0.95rem] outline-none placeholder:text-muted-foreground"
           />
           <Button type="submit" size="icon" aria-label="Send message">
             <SendHorizonal />
