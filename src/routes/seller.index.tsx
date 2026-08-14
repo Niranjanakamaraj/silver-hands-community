@@ -29,7 +29,8 @@ const widgets = [
 ];
 
 function SellerDashboard() {
-  const [hero, ...rest] = widgets;
+  const hero = widgets[0]!;
+  const rest = widgets.slice(1);
 
   return (
     <div className="space-y-16">
