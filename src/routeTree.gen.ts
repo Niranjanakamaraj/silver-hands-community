@@ -19,8 +19,11 @@ import { Route as BuyerProductsRouteImport } from './routes/buyer.products'
 import { Route as BuyerProfileRouteImport } from './routes/buyer.profile'
 import { Route as BuyerServicesRouteImport } from './routes/buyer.services'
 import { Route as SellerIndexRouteImport } from './routes/seller.index'
+import { Route as SellerAnalyticsRouteImport } from './routes/seller.analytics'
+import { Route as SellerMessagesRouteImport } from './routes/seller.messages'
 import { Route as SellerOrdersRouteImport } from './routes/seller.orders'
 import { Route as SellerProductsRouteImport } from './routes/seller.products'
+import { Route as SellerProfileRouteImport } from './routes/seller.profile'
 import { Route as SellerServicesRouteImport } from './routes/seller.services'
 import { Route as BuyerProductIdRouteImport } from './routes/buyer.product.$id'
 import { Route as BuyerServiceIdRouteImport } from './routes/buyer.service.$id'
@@ -75,6 +78,16 @@ const SellerIndexRoute = SellerIndexRouteImport.update({
   path: '/',
   getParentRoute: () => SellerRoute,
 } as any)
+const SellerAnalyticsRoute = SellerAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => SellerRoute,
+} as any)
+const SellerMessagesRoute = SellerMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => SellerRoute,
+} as any)
 const SellerOrdersRoute = SellerOrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
@@ -83,6 +96,11 @@ const SellerOrdersRoute = SellerOrdersRouteImport.update({
 const SellerProductsRoute = SellerProductsRouteImport.update({
   id: '/products',
   path: '/products',
+  getParentRoute: () => SellerRoute,
+} as any)
+const SellerProfileRoute = SellerProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => SellerRoute,
 } as any)
 const SellerServicesRoute = SellerServicesRouteImport.update({
@@ -110,8 +128,11 @@ export interface FileRoutesByFullPath {
   '/buyer/products': typeof BuyerProductsRoute
   '/buyer/profile': typeof BuyerProfileRoute
   '/buyer/services': typeof BuyerServicesRoute
+  '/seller/analytics': typeof SellerAnalyticsRoute
+  '/seller/messages': typeof SellerMessagesRoute
   '/seller/orders': typeof SellerOrdersRoute
   '/seller/products': typeof SellerProductsRoute
+  '/seller/profile': typeof SellerProfileRoute
   '/seller/services': typeof SellerServicesRoute
   '/buyer/': typeof BuyerIndexRoute
   '/seller/': typeof SellerIndexRoute
@@ -125,8 +146,11 @@ export interface FileRoutesByTo {
   '/buyer/products': typeof BuyerProductsRoute
   '/buyer/profile': typeof BuyerProfileRoute
   '/buyer/services': typeof BuyerServicesRoute
+  '/seller/analytics': typeof SellerAnalyticsRoute
+  '/seller/messages': typeof SellerMessagesRoute
   '/seller/orders': typeof SellerOrdersRoute
   '/seller/products': typeof SellerProductsRoute
+  '/seller/profile': typeof SellerProfileRoute
   '/seller/services': typeof SellerServicesRoute
   '/buyer': typeof BuyerIndexRoute
   '/seller': typeof SellerIndexRoute
@@ -143,8 +167,11 @@ export interface FileRoutesById {
   '/buyer/products': typeof BuyerProductsRoute
   '/buyer/profile': typeof BuyerProfileRoute
   '/buyer/services': typeof BuyerServicesRoute
+  '/seller/analytics': typeof SellerAnalyticsRoute
+  '/seller/messages': typeof SellerMessagesRoute
   '/seller/orders': typeof SellerOrdersRoute
   '/seller/products': typeof SellerProductsRoute
+  '/seller/profile': typeof SellerProfileRoute
   '/seller/services': typeof SellerServicesRoute
   '/buyer/': typeof BuyerIndexRoute
   '/seller/': typeof SellerIndexRoute
@@ -162,8 +189,11 @@ export interface FileRouteTypes {
     | '/buyer/products'
     | '/buyer/profile'
     | '/buyer/services'
+    | '/seller/analytics'
+    | '/seller/messages'
     | '/seller/orders'
     | '/seller/products'
+    | '/seller/profile'
     | '/seller/services'
     | '/buyer/'
     | '/seller/'
@@ -177,8 +207,11 @@ export interface FileRouteTypes {
     | '/buyer/products'
     | '/buyer/profile'
     | '/buyer/services'
+    | '/seller/analytics'
+    | '/seller/messages'
     | '/seller/orders'
     | '/seller/products'
+    | '/seller/profile'
     | '/seller/services'
     | '/buyer'
     | '/seller'
@@ -194,8 +227,11 @@ export interface FileRouteTypes {
     | '/buyer/products'
     | '/buyer/profile'
     | '/buyer/services'
+    | '/seller/analytics'
+    | '/seller/messages'
     | '/seller/orders'
     | '/seller/products'
+    | '/seller/profile'
     | '/seller/services'
     | '/buyer/'
     | '/seller/'
@@ -281,6 +317,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SellerIndexRouteImport
       parentRoute: typeof SellerRoute
     }
+    '/seller/analytics': {
+      id: '/seller/analytics'
+      path: '/analytics'
+      fullPath: '/seller/analytics'
+      preLoaderRoute: typeof SellerAnalyticsRouteImport
+      parentRoute: typeof SellerRoute
+    }
+    '/seller/messages': {
+      id: '/seller/messages'
+      path: '/messages'
+      fullPath: '/seller/messages'
+      preLoaderRoute: typeof SellerMessagesRouteImport
+      parentRoute: typeof SellerRoute
+    }
     '/seller/orders': {
       id: '/seller/orders'
       path: '/orders'
@@ -293,6 +343,13 @@ declare module '@tanstack/react-router' {
       path: '/products'
       fullPath: '/seller/products'
       preLoaderRoute: typeof SellerProductsRouteImport
+      parentRoute: typeof SellerRoute
+    }
+    '/seller/profile': {
+      id: '/seller/profile'
+      path: '/profile'
+      fullPath: '/seller/profile'
+      preLoaderRoute: typeof SellerProfileRouteImport
       parentRoute: typeof SellerRoute
     }
     '/seller/services': {
@@ -344,15 +401,21 @@ const BuyerRouteChildren: BuyerRouteChildren = {
 const BuyerRouteWithChildren = BuyerRoute._addFileChildren(BuyerRouteChildren)
 
 interface SellerRouteChildren {
+  SellerAnalyticsRoute: typeof SellerAnalyticsRoute
+  SellerMessagesRoute: typeof SellerMessagesRoute
   SellerOrdersRoute: typeof SellerOrdersRoute
   SellerProductsRoute: typeof SellerProductsRoute
+  SellerProfileRoute: typeof SellerProfileRoute
   SellerServicesRoute: typeof SellerServicesRoute
   SellerIndexRoute: typeof SellerIndexRoute
 }
 
 const SellerRouteChildren: SellerRouteChildren = {
+  SellerAnalyticsRoute: SellerAnalyticsRoute,
+  SellerMessagesRoute: SellerMessagesRoute,
   SellerOrdersRoute: SellerOrdersRoute,
   SellerProductsRoute: SellerProductsRoute,
+  SellerProfileRoute: SellerProfileRoute,
   SellerServicesRoute: SellerServicesRoute,
   SellerIndexRoute: SellerIndexRoute,
 }
