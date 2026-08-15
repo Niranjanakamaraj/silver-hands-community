@@ -99,21 +99,8 @@ function ProductDetail() {
         </div>
       </div>
 
-      <section>
-        <h2 className="text-2xl">Reviews</h2>
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
-          {reviews.map((r) => (
-            <div key={r.name} className="surface p-6">
-              <div className="flex items-center justify-between gap-2">
-                <p className="font-semibold">{r.name}</p>
-                <span className="text-sm text-muted-foreground">{r.date}</span>
-              </div>
-              <Stars rating={r.rating} className="mt-1" />
-              <p className="mt-2 text-muted-foreground">{r.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <ReviewsSection targetId={product.id} />
+
     </article>
   );
 }
