@@ -104,21 +104,8 @@ function ServiceDetail() {
             </div>
           </section>
 
-          <section>
-            <h2 className="text-2xl">Reviews</h2>
-            <div className="mt-4 space-y-4">
-              {reviews.map((r) => (
-                <div key={r.name} className="surface p-6">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <p className="font-semibold">{r.name}</p>
-                    <span className="text-sm text-muted-foreground">{r.date}</span>
-                  </div>
-                  <Stars rating={r.rating} className="mt-1" />
-                  <p className="mt-2 text-muted-foreground">{r.text}</p>
-                </div>
-              ))}
-            </div>
-          </section>
+          <ReviewsSection targetId={service.id} />
+
         </div>
 
         <aside className="lg:sticky lg:top-28 lg:self-start">
