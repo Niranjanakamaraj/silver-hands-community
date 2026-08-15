@@ -2,9 +2,10 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ShoppingBag, Truck } from "lucide-react";
 import { toast } from "sonner";
 
+import { ReviewsSection } from "@/components/Reviews";
 import { Stars } from "@/components/Stars";
 import { Button } from "@/components/ui/button";
-import { inr, products, reviews } from "@/lib/data";
+import { inr, products } from "@/lib/data";
 import { addToCart } from "@/lib/store";
 
 export const Route = createFileRoute("/buyer/product/$id")({
