@@ -2,9 +2,10 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { CalendarCheck, Clock, Globe, MapPin } from "lucide-react";
 import { toast } from "sonner";
 
+import { ReviewsSection } from "@/components/Reviews";
 import { Stars } from "@/components/Stars";
 import { Button } from "@/components/ui/button";
-import { inr, reviews, services } from "@/lib/data";
+import { inr, services } from "@/lib/data";
 
 export const Route = createFileRoute("/buyer/service/$id")({
   loader: ({ params }) => {
